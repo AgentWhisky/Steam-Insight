@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Checkers</title>
+
+    <!-- Load Main Css -->
+    <link rel="stylesheet" href="css/whisky-dark.css">
+    <link rel="stylesheet" href="css/search.css">
+
+
+    <!-- Load SocketIO -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- Load Icons -->
+    <script src="https://kit.fontawesome.com/d970e760d1.js" crossorigin="anonymous"></script>
+
+    <!-- Load ReactJS -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Load Local JS Files -->
+
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="https://tcharris.xyz"><i class="fa-solid fa-house-chimney"></i> Home</a>
+        <a href="https://github.com/AgentWhisky"><i class="fa-brands fa-github"></i> Github</a>
+    </div>
+
+    <!-- Container root for React -->
+    <div class="root" id="root"></div>
+
+    <!--Load ReactJS File-->
+    <script type="text/babel" src="./js/client.js"></script>
+
+</body>
+</html>

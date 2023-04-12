@@ -1,0 +1,72 @@
+
+.appDiv {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    background-color: RED;
+}
+
+/* Search Page Div */
+.searchDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: GREEN;
+    margin:0.25rem;
+    border-width: 0.25em;
+    text-align: center;
+    border-radius: 0.25em;
+    width: 80%;
+    min-width: 20%;
+}
+
+/* Search Input Div */
+.searchInput {
+    background-color: ORANGE;
+    width: 100%;
+}
+
+.searchInput input {
+    flex-grow: 1;
+    height: 2em;
+    border: none;
+    border-radius: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin: 1em 1em;
+
+    width: 60%;
+
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Search Results Div */
+.searchResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    background-color: BLUE;
+}
+
+.searchResults button {
+    width: 60%;
+
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 1em 1em;
+    background-color: #f2f2f2;
+    color: #333;
+    border: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.searchResults button:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}

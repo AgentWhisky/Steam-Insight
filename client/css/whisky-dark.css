@@ -1,0 +1,57 @@
+:root {
+    /* Dark Mode Colors */
+    --text-color: white;
+
+    --page-color1: #2e3043;
+    --page-color2: #3f466a;
+    --page-color3: #5d5f6f;
+    --page-color4: #15161b;
+
+
+
+
+}
+body {
+    text-align: center;
+    background-color: var(--page-color4);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+
+/* Nav Bar */
+.navbar {
+    width: 100%;
+    background-color: var(--page-color2);
+    overflow: auto;
+}
+.navbar a:link {
+    float: left;
+    padding: 0.7em;
+    text-decoration: none;
+    font-size: 1em;
+}
+.navbar a:hover {
+    background-color: var(--page-color3);
+    color: var(--page-color2);
+}
+.navbar a:visited {
+    color: inherit;
+}
+
+.navbar_main{
+    background-color: var(--page-color1);
+}
+
+/* Root */
+.root {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
