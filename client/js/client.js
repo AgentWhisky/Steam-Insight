@@ -67,7 +67,7 @@ class Client extends React.Component {
         const str = event.target.value;
 
         // Set SearchData to null on empty
-        if(str.length === 0) {
+        if(str.length < 3) {
             this.setState({
                 inputText: "",
                 searchData: null
@@ -170,10 +170,18 @@ class Client extends React.Component {
             backgroundImage: `url(${this.state.gameData.background})`,
         };
 
+        const titleDiv = <div className='titleContainer'>
+            <div className='titleText'>
+                <h2>{this.state.gameData.name}</h2>
+                <h4>{this.state.gameData.short_description}</h4>
+            </div>
+            <img src={this.state.gameData.header_image} alt="header_image"/>
+        </div>
+
+
         return <div className='gameDiv' style={divStyle}>
             <button className='backButton' onClick={this.onBackClick}>Back To Search</button>
-            <h2>GAME</h2>
-            <img src={this.state.gameData.header_image} alt="Game Image" />
+            {titleDiv}
         </div>;
     }
 

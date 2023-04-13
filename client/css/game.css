@@ -4,8 +4,36 @@
     position: relative;
 }
 
+/* Back Button */
 .backButton {
     position: absolute;
     top: 1em;
     left: 1em;
+
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 0.75em 1em;
+
+    background-image: linear-gradient(to right, #3b9fef, #2562d1);
+    color: #c3e1f8;
+
+
+    border: 2px solid black;
+    margin: 0 auto;
+}
+
+.backButton:hover {
+    background-image: linear-gradient(to right, #3b9fef, #417be8);
+    cursor: pointer;
+}
+
+/* Title Div */
+.titleContainer {
+    display: flex;
+    align-items: center;
+}
+
+.titleText {
+    flex: 1;
+    padding: 1em 1em;
 }
