@@ -1,5 +1,5 @@
 
-const MAX_CACHE_TIME = 10 // Time In Minutes
+const MAX_CACHE_TIME = 60 // Time In Minutes
 
 const {isValidTime} = require("./generalUtils.js");
 

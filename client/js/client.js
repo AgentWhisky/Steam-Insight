@@ -51,13 +51,20 @@ class Client extends React.Component {
             // emit both params
         }
         else if(appid) {
-            console.log(`${appid}`);
-            // emit appid
+            this.getSelectionResponse(appid);
         }
         else if(steamid) {
             console.log(`${steamid}`);
             // emit steamid
         }
+    }
+
+    updateURL(appid) {
+        let newURL = window.location.pathname;
+        if(appid) {
+            newURL += '?appid=' + appid;
+        }
+        window.history.pushState({}, '', newURL);
     }
 
     // *** React Events ***
@@ -89,19 +96,28 @@ class Client extends React.Component {
         event.preventDefault();
         const appid = parseInt(event.target.id);
 
-        this.socket.emit('select', appid, response => {
-            console.log(response);
-            this.setState({
-                gameData: response
-            });
-        });
+        this.getSelectionResponse(appid)
     }
 
     onBackClick(event) {
         event.preventDefault();
 
+        this.updateURL(null);
         this.setState({
             gameData: null
+        });
+    }
+
+    getSelectionResponse(appid) {
+        this.socket.emit('select', appid, response => {
+            if(!response) {
+                alert(`No Data For ${appid} Retrieved, We May Have Reached RateLimit, Please Wait`);
+            }
+
+            this.updateURL(appid);
+            this.setState({
+                gameData: response
+            });
         });
     }
 
@@ -124,7 +140,7 @@ class Client extends React.Component {
 
     buildSearchInput() {
         // Create Search Input
-        const search = <input type="text" defaultValue={this.state.inputText} id="searchInput" placeholder='Enter Game Name or App ID' onChange={this.onSearchInputChange}/>
+        const search = <input type="text" defaultValue={this.state.inputText} id="searchInput" placeholder='Enter Name or App ID' onChange={this.onSearchInputChange}/>
         return(<div className='searchInput'>
             {search}
         </div>);

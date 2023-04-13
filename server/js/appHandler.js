@@ -19,7 +19,6 @@ class AppHandler {
         // Cache for storing App List (From Database)
         this.appListCache = new Cache();
 
-
         // Create Database Query Pool
         this.pool = mysql.createPool({
             host: DB_HOST,
@@ -101,7 +100,7 @@ class AppHandler {
             const likeStr = `%${str}%`;
 
             // Send Query to Database
-            this.pool.query(query, [likeStr, str, likeStr], (error, results, fields) => {
+            this.pool.query(query, [likeStr, str, str], (error, results, fields) => {
                 if(error) {
                     reject(error);
                 }
@@ -109,6 +108,20 @@ class AppHandler {
                     resolve(results);
                 }
             });
+        });
+    }
+
+    _verifyAppid(appid) {
+        const query = "SELECT * FROM your_table_name WHERE id = your_id_value;\n"
+
+        // Send Query to Database
+        this.pool.query(query, [likeStr, str, str], (error, results, fields) => {
+            if(error) {
+                reject(error);
+            }
+            else {
+                resolve(results);
+            }
         });
     }
 }

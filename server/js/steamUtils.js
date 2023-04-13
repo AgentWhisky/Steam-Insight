@@ -11,6 +11,11 @@ function getAppInfo(appid) {
     // Combine API Calls for AppDetails and AppAchievements
     return Promise.all([getAppDetails(appid), getAppAchievements(appid)])
         .then(([appDetails, appAchievements]) => {
+
+            if(!appDetails) {
+                return null;
+            }
+
             // Return Compiled Results
             return compileAppInfo(appDetails, appAchievements, appid);
         });
@@ -39,7 +44,7 @@ function getResponseFromURL(url) {
  * @returns A Promise containing app details response or null on failure
  */
 function getAppDetails(appid) {
-    const url = `https://store.steampowered.com/api/appdetails?appids=${appid}`
+    const url = `https://store.steampowered.com/api/appdetails?appids=${appid}&l=english`
     return getResponseFromURL(url).then(response => {
         return response;
     }).catch(error => {
@@ -75,6 +80,10 @@ function compileAppInfo(appDetails, appAchievements, appid) {
     }
     // Get App Info From Response
     const details = appDetails[appid]?.data;
+
+    if(!details) {
+        return null;
+    }
 
     // Extract Achievements If Exist
     const achievements = appAchievements?.game?.availableGameStats?.achievements;
