@@ -50,11 +50,12 @@ io.on('connection', function(socket) {
 
     // User Game Selection
     socket.on('select', (appid, callback) => {
+        console.log(`appid: ${appid}`);
         handler.getAppInfo(appid).then(response => {
             callback(response);
         });
     });
-    
+
 });
 
 

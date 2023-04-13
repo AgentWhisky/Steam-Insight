@@ -7,7 +7,9 @@ class Client extends React.Component {
         super(props);
 
         this.state = {
-            searchData: null // Search Results
+            inputText: "",
+            searchData: null, // Search Results
+            gameData: null // Game Display
         };
 
         // SocketIO
@@ -17,6 +19,7 @@ class Client extends React.Component {
         // * Bind React Events *
         this.onSearchInputChange = this.onSearchInputChange.bind(this);
         this.onSearchResultClick = this.onSearchResultClick.bind(this);
+        this.onBackClick = this.onBackClick.bind(this);
 
 
     }
@@ -66,6 +69,7 @@ class Client extends React.Component {
         // Set SearchData to null on empty
         if(str.length === 0) {
             this.setState({
+                inputText: "",
                 searchData: null
             });
         }
@@ -74,6 +78,7 @@ class Client extends React.Component {
         if(str.length >= 3) {
             this.socket.emit('search', str, response => {
                 this.setState({
+                    inputText: str,
                     searchData: response
                 });
             });
@@ -82,19 +87,22 @@ class Client extends React.Component {
 
     onSearchResultClick(event) {
         event.preventDefault();
-
         const appid = parseInt(event.target.id);
 
         this.socket.emit('select', appid, response => {
-            /*
-            this.setState({
-                searchData: response
-            });*/
-
             console.log(response);
+            this.setState({
+                gameData: response
+            });
         });
+    }
 
+    onBackClick(event) {
+        event.preventDefault();
 
+        this.setState({
+            gameData: null
+        });
     }
 
 
@@ -103,15 +111,20 @@ class Client extends React.Component {
 
     // *** Search Page ***
     buildSearchPage() {
+        if(this.state.searchData) {
+            return <div className='searchDiv'>
+                {this.buildSearchInput()}
+                {this.buildSearchResults()}
+            </div>;
+        }
         return <div className='searchDiv'>
             {this.buildSearchInput()}
-            {this.buildSearchResults()}
         </div>;
     }
 
     buildSearchInput() {
         // Create Search Input
-        const search = <input type="text" id="searchInput" placeholder='Enter Game Name or App ID' onChange={this.onSearchInputChange}/>
+        const search = <input type="text" defaultValue={this.state.inputText} id="searchInput" placeholder='Enter Game Name or App ID' onChange={this.onSearchInputChange}/>
         return(<div className='searchInput'>
             {search}
         </div>);
@@ -122,26 +135,46 @@ class Client extends React.Component {
         let results = null;
 
         if(searchData) {
-            if(searchData.length === 0) {
-                results = <label>No Results</label>
-            }
-            else {
+            if(searchData.length > 0) {
                 results = []
                 for(const data of searchData) {
-                    const text = `[${data.name}] [${data.appid}]`;
-                    results.push(<button id={data.appid} key={data.appid} onClick={this.onSearchResultClick}>{text}</button>);
+                    let newButton = <button id={data.appid} key={data.appid} onClick={this.onSearchResultClick}>
+                        <h2 style={{ pointerEvents: 'none' }}>{data.name}</h2>
+                        <h3 style={{ pointerEvents: 'none' }}>{data.appid}</h3>
+                    </button>;
+                    results.push(newButton);
                 }
+            }
+            else {
+                results = [];
             }
         }
 
         if(results) {
-            return <div className='searchResults'>
-                {results}
+            return <div className='searchResultsContainer'>
+                <h2>Search Results: {this.state.searchData.length}</h2>
+                <div className='searchResults'>
+                    {results}
+                </div>
             </div>
+
         }
         return <div className='searchResults'>
         </div>
 
+    }
+
+    // *** Game Page ***
+    buildGamePage() {
+        const divStyle = {
+            backgroundImage: `url(${this.state.gameData.background})`,
+        };
+
+        return <div className='gameDiv' style={divStyle}>
+            <button className='backButton' onClick={this.onBackClick}>Back To Search</button>
+            <h2>GAME</h2>
+            <img src={this.state.gameData.header_image} alt="Game Image" />
+        </div>;
     }
 
 
@@ -150,9 +183,16 @@ class Client extends React.Component {
     // *** Page Render Functions ***
 
     buildApp() {
-        return (<div className="appDiv">
-            {this.buildSearchPage()}
-        </div>);
+        if(this.state.gameData) {
+            return (<div className="appDiv">
+                {this.buildGamePage()}
+            </div>);
+        }
+        else {
+            return (<div className="appDiv">
+                {this.buildSearchPage()}
+            </div>);
+        }
     }
 
 

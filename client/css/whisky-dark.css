@@ -7,13 +7,21 @@
     --page-color3: #5d5f6f;
     --page-color4: #15161b;
 
-
+    /* Dave Colors */
+    --color-1: #2a475e;
+    --color-2: #282d32;
+    --color-3: #1b2838;
 
 
 }
 body {
     text-align: center;
-    background-color: var(--page-color4);
+
+    background-image: linear-gradient(to bottom, #2a475e, #1b2838);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
     color: var(--text-color);
     margin: 0;
     padding: 0;
@@ -24,7 +32,7 @@ body {
 /* Nav Bar */
 .navbar {
     width: 100%;
-    background-color: var(--page-color2);
+    background-color: #1f222b;
     overflow: auto;
 }
 .navbar a:link {
@@ -49,6 +57,12 @@ body {
 .root {
     display: flex;
     justify-content: center;
+}
+
+.appDiv {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 

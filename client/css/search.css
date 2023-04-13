@@ -1,11 +1,6 @@
 
-.appDiv {
-    display: flex;
-    justify-content: center;
-    width: 100%;
 
-    background-color: RED;
-}
+
 
 /* Search Page Div */
 .searchDiv {
@@ -14,7 +9,8 @@
     justify-content: center;
     align-items: center;
 
-    background-color: GREEN;
+    /*background-color: RED;*/
+
     margin:0.25rem;
     border-width: 0.25em;
     text-align: center;
@@ -25,14 +21,13 @@
 
 /* Search Input Div */
 .searchInput {
-    background-color: ORANGE;
     width: 100%;
+    padding: 1em 1em;
 }
 
 .searchInput input {
     flex-grow: 1;
     height: 2em;
-    border: none;
     border-radius: 0.25em;
     padding-left: 1em;
     padding-right: 1em;
@@ -40,33 +35,59 @@
 
     width: 60%;
 
+    border: 2px solid black;
+
     font-size: 1.5rem;
     text-align: center;
 }
 
 /* Search Results Div */
-.searchResults {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.searchResultsContainer {
     width: 100%;
+    justify-content: center;
+    align-items: center;
+}
 
-    background-color: BLUE;
+.searchResults {
+    width: 100%;
+    box-sizing: border-box;
+
+    /*background-color: BLUE;*/
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-gap: 1em;
+    justify-content: center;
+    padding: 1em 1em;
+
+
+    text-align: center;
+
 }
 
 .searchResults button {
-    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     font-size: 16px;
     border-radius: 5px;
-    padding: 1em 1em;
-    background-color: #f2f2f2;
-    color: #333;
-    border: none;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    padding: 0.75em 1em;
+
+    background-image: linear-gradient(to right, #3b9fef, #2562d1);
+    color: #c3e1f8;
+
+
+    border: 2px solid black;
+    margin: 0 auto;
+
+    height: 10em;
+    width: 100%;
+
+
 }
 .searchResults button:hover {
-    background-color: #ddd;
+    background-image: linear-gradient(to right, #3b9fef, #417be8);
     cursor: pointer;
 }
