@@ -37,3 +37,94 @@
     flex: 1;
     padding: 2em 2em;
 }
+
+.swapButtons {
+    padding: 1em 1em;
+}
+
+.swapButtons button {
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 0.75em 1em;
+
+    background-image: linear-gradient(to right, #2c6a93, #093377);
+    color: #c3e1f8;
+
+    border: 2px solid black;
+    margin: 0 auto;
+
+    width: 20em;
+}
+
+.swapButtons button:disabled {
+    background-image: linear-gradient(to right, #3b9fef, #2562d1);
+}
+
+
+.detailsTable {
+    border-collapse: collapse;
+    padding: 1em 1em;
+    table-layout: fixed;
+    width: 80%;
+    margin: auto;
+}
+
+.detailsTable td {
+    word-wrap: break-word;
+    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+    border: 1px solid black;
+    padding: 1em;
+}
+
+.detailsTable td:first-child {
+    width: 1em;
+}
+
+.detailsTable td:last-child {
+    text-align: left;
+    width: 100%;
+}
+
+.achievementTable {
+    border-collapse: collapse;
+    padding: 1em 1em;
+    table-layout: fixed;
+    width: 80%;
+    margin: auto;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.achievementTable td {
+    word-wrap: break-word;
+    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+    border: 1px solid black;
+    padding: 0.25em 1em;
+}
+
+.achievementTable td:last-child {
+    text-align: left;
+    width: 100%;
+}
+
+.achievementTable th {
+    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+    border: 1px solid black;
+    padding: 0.25em 0.25em;
+}
+
+.achievementTable h2 {
+    padding: 1em 1em;
+}
+
+.iconImg {
+    width: 64px;
+    height: 64px;
+}
+
+.noticeH2 {
+    border: 1px solid black;
+    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+}
