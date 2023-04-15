@@ -1,15 +1,17 @@
 
+
 .gameDiv {
     width: 100%;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 2em;
 }
 
 /* Back Button */
 .backButton {
-    position: absolute;
-    top: 1em;
-    left: 1em;
-
     font-size: 16px;
     border-radius: 5px;
     padding: 0.75em 1em;
@@ -17,25 +19,38 @@
     background-image: linear-gradient(to right, #3b9fef, #2562d1);
     color: #c3e1f8;
 
+    display: inline-block;
+    border: 1px solid black;
 
-    border: 2px solid black;
-    margin: 0 auto;
-}
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-bottom: 1em;
 
-.backButton:hover {
-    background-image: linear-gradient(to right, #3b9fef, #417be8);
-    cursor: pointer;
 }
 
 /* Title Div */
 .titleContainer {
     display: flex;
     align-items: center;
+    width: 80%;
+    margin: 0 auto;
+
+    background-image: linear-gradient(to right, rgba(95, 95, 95, 0.22), rgba(73, 73, 73, 0.22));
+    border-radius: 0.5em;
+
+}
+
+
+
+.titleContainer img {
+    border-radius: 0.5em;
 }
 
 .titleText {
     flex: 1;
-    padding: 2em 2em;
+    padding-bottom: 2em;
+    padding-left: 4em;
+    padding-right: 4em;
 }
 
 .swapButtons {
@@ -45,19 +60,23 @@
 .swapButtons button {
     font-size: 16px;
     border-radius: 5px;
-    padding: 0.75em 1em;
 
-    background-image: linear-gradient(to right, #2c6a93, #093377);
+    background-image: linear-gradient(to right, #1c4c6c, #093377);
     color: #c3e1f8;
 
-    border: 2px solid black;
-    margin: 0 auto;
+    border: 1px solid black;
 
     width: 20em;
+
+    margin: 0 1em;
+}
+
+.swapButtons button:hover {
+    cursor: pointer;
 }
 
 .swapButtons button:disabled {
-    background-image: linear-gradient(to right, #3b9fef, #2562d1);
+    background-image: linear-gradient(to right, #3b9fef, #316cd9);
 }
 
 
@@ -104,20 +123,27 @@
     padding: 0.25em 1em;
 }
 
-.achievementTable td:last-child {
+.achievementTable td:nth-child(5) {
     text-align: left;
     width: 100%;
+}
+
+.achievementTable td.completed {
+    background-image: linear-gradient(to right, #3183c5, #2a5bb6);
 }
 
 .achievementTable th {
     background-image: linear-gradient(to bottom, #2e2f31, #363c45);
     border: 1px solid black;
-    padding: 0.25em 0.25em;
+    padding: 0.5em 0.5em;
 }
 
 .achievementTable h2 {
-    padding: 1em 1em;
+    padding: 0.5em 1em;
+    width: 40%;
+    margin: 0 auto;
 }
+
 
 .iconImg {
     width: 64px;
@@ -127,4 +153,40 @@
 .noticeH2 {
     border: 1px solid black;
     background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+}
+
+.userSyncDiv {
+
+}
+
+.userSyncDiv input {
+    flex-grow: 1;
+    height: 2em;
+    border-radius: 0.25em;
+
+    padding: 0.25em 1em;
+
+    margin: 1em 1em;
+
+    border: 1px solid black;
+
+    font-size: 16px;
+    text-align: center;
+}
+
+.settingsWarning {
+    background-image: linear-gradient(to right, rgba(95, 95, 95, 0.5), rgba(73, 73, 73, 0.5));
+    padding: 1em 1em;
+}
+
+.settingsWarning a:link {
+
+}
+
+.settingsWarning a:visited {
+    color: inherit;
+}
+
+.settingsWarning a:hover {
+    color: #1b7fd2;
 }

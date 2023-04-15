@@ -1,10 +1,20 @@
 
-const MAX_CACHE_TIME = 60 // Time In Minutes
+const DEFAULT_CACHE_TIME = 60; // Max Cache Time In Minutes
 
 const {isValidTime} = require("./generalUtils.js");
 
+/**
+ * Class - Used for storing and retrieving data with a maximum age
+ */
 class Cache {
-    constructor() {
+    constructor(cacheTime) {
+        if(cacheTime) {
+            this.maxCacheTime = cacheTime;
+        }
+        else {
+            this.maxCacheTime = DEFAULT_CACHE_TIME;
+        }
+
         this._cache = {};
     }
 
@@ -28,7 +38,7 @@ class Cache {
             }
             // Check Age
             else {
-                if(isValidTime(entry.time, MAX_CACHE_TIME)) {
+                if(isValidTime(entry.time, this.maxCacheTime)) {
                     return entry.data;
                 }
             }

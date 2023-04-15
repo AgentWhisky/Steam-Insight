@@ -21,8 +21,22 @@ function getAppInfo(appid) {
         });
 }
 
+/**
+ * Function to get user info from the Steam Web API pertaining to a given appid
+ * @param appid is the given appid
+ * @param steamid is the given steamid
+ * @returns A Promise of user info for game on success or null on failure
+ */
+function getUserAchievements(appid, steamid) {
+    const url = `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=${appid}&key=${process.env.STEAM_API_KEY}&steamid=${steamid}`
+
+    return getResponseFromURL(url).then(response => {
+        return response;
+    });
+}
+
 // *** Export Functions ***
-module.exports = {getAppInfo};
+module.exports = {getAppInfo, getUserAchievements};
 
 
 // *** Private Functions ***

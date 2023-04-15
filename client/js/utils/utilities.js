@@ -8,6 +8,15 @@ function removeHTMLFromString(str) {
 }
 
 /**
+ * Function to remove any non-digits from a given string
+ * @param str is the given string
+ * @returns String with non-digit characters removed
+ */
+function removeNonDigits(str) {
+    return str.replace(/\D/g, '');
+}
+
+/**
  * Function to capitalize the first letter of given string
  * @param str is the given string
  * @returns Capitalized string

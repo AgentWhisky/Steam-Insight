@@ -1,7 +1,7 @@
 // Imports
 const mysql = require('mysql2');
 const {Cache} = require("./cache.js");
-const {getAppInfo} = require("./steamUtils");
+const {getAppInfo, getUserAchievements} = require("./steamUtils");
 
 // Database Info
 const DB_HOST = process.env.DB_HOST;
@@ -10,14 +10,19 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 
+/**
+ * Class - Used For Handling Searching and Retrieving Game Details, Caches Results
+ */
 class AppHandler {
-
     constructor() {
         // Cache for storing AppInfo (From Steam Web API)
         this.appInfoCache = new Cache();
 
         // Cache for storing App List (From Database)
         this.appListCache = new Cache();
+
+        // Cache for storing User Info (From Steam Web API)
+        this.userInfoCache = new Cache(10); // 10 Minute Cache
 
         // Create Database Query Pool
         this.pool = mysql.createPool({
@@ -36,19 +41,43 @@ class AppHandler {
      * REQUIRED: Use then() when calling function
      */
     getAppInfo(appid) {
-        // Check Cache For Info
-        let info = this.appInfoCache.getData(appid);
-        if(info != null) {
-            console.log(`Cache Hit For ${appid}`);
-            return Promise.resolve(info);
+        // *** Game Info ***
+        // Check Cache For Game Info
+        const appInfo = this.appInfoCache.getData(appid);
+        if(appInfo) {
+            return Promise.resolve(appInfo);
         }
 
-        // Get Info From API and Update Cache
+        // Get Game Info From API and Update Cache
         return getAppInfo(appid).then(appInfo => {
             this.appInfoCache.update(appid, appInfo);
-            console.log(`Cache Miss For ${appid}`);
             return appInfo;
         });
+    }
+
+    /**
+     * Function to get user info for given appid and steamid pair
+     * @param appid is the given appid
+     * @param steamid is the given steamid
+     * @returns A Promise of user info on success or null on failure
+     * REQUIRED: Use then() when calling function
+     */
+    getUserInfo(appid, steamid) {
+        // Cache Key
+        const key = `${appid};${steamid}`;
+
+        // Check Cache For User Info
+        const userInfo = this.userInfoCache.getData(key);
+        if(userInfo) {
+            return Promise.resolve(userInfo);
+        }
+
+        // Get User Info For App From API and Update Cache
+        return getUserAchievements(appid, steamid).then(userInfo => {
+            this.userInfoCache.update(key, userInfo);
+            return userInfo;
+        });
+
     }
 
     /**
@@ -59,18 +88,15 @@ class AppHandler {
     search(str) {
         // Limit Search String to 1024 Characters
         if(str.length > 1024) {
-            console.log(`Search String Too Large`);
             return Promise.resolve(null);
         }
 
         // Check Cache For Search Info
         const appList = this.appListCache.getData(str);
         if(appList != null) {
-            console.log(`Cache Hit For ${str}`);
             return Promise.resolve(appList);
         }
 
-        console.log(`Cache Miss For ${str}`);
         // Get Search Results from Database and Update Cache
         return this._getAppListFromString(str).then(results => {
             this.appListCache.update(str, results);
@@ -80,6 +106,8 @@ class AppHandler {
             return [] // Return Empty List in error
         });
     }
+
+    // *** Private Functions ***
 
     /**
      * Function to Asynchronously Make A Query to Database For A Search Given a String
@@ -96,7 +124,7 @@ class AppHandler {
                 "FROM appinfo\n" +
                 "WHERE (name LIKE ? OR CAST(appid AS CHAR) = ?) AND type = 'game'\n" +
                 "ORDER BY CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, ?, '')) ASC, name ASC\n" +
-                "LIMIT 25"
+                "LIMIT 30"
             const likeStr = `%${str}%`;
 
             // Send Query to Database
@@ -108,20 +136,6 @@ class AppHandler {
                     resolve(results);
                 }
             });
-        });
-    }
-
-    _verifyAppid(appid) {
-        const query = "SELECT * FROM your_table_name WHERE id = your_id_value;\n"
-
-        // Send Query to Database
-        this.pool.query(query, [likeStr, str, str], (error, results, fields) => {
-            if(error) {
-                reject(error);
-            }
-            else {
-                resolve(results);
-            }
         });
     }
 }
