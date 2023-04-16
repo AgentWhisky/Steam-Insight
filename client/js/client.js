@@ -8,6 +8,7 @@ class Client extends React.Component {
 
         this.state = {
             searchInputText: "", // Search Input
+
             detailsTable: 0, // 0 For Details, 1 For Achievements
             searchData: null, // Search Results
 
@@ -27,7 +28,6 @@ class Client extends React.Component {
         this.onSearchResultClick = this.onSearchResultClick.bind(this);
         this.onBackClick = this.onBackClick.bind(this);
         this.onAppSectionSwap = this.onAppSectionSwap.bind(this);
-        this.onSteamIDChange = this.onSteamIDChange.bind(this);
         this.onUserSync = this.onUserSync.bind(this);
     }
 
@@ -184,14 +184,6 @@ class Client extends React.Component {
     }
 
     /**
-     * Function to handle changing of the steamid in state
-     * @param event is the React event - Input
-     */
-    onSteamIDChange(event) {
-        event.preventDefault();
-    }
-
-    /**
      * Function to handle manual syncing of steamid
      * @param event is the React event - Button
      */
@@ -251,6 +243,12 @@ class Client extends React.Component {
                 this.getUserData(appid, steamid);
             }
 
+            // Scroll Window to Top
+            window.scrollTo({
+                top: 0,
+                behavior: 'instant'
+            });
+
             // Update State appid and gameData
             this.setState({
                 gameData: response,
@@ -293,8 +291,12 @@ class Client extends React.Component {
      * @returns The Div Containing the Current Search Page
      */
     buildSearchPage() {
+
+        const default_img = 'https://cdn.discordapp.com/attachments/1096875004899115038/1096895831992434788/header-final.png';
+
         // Create Search Input
         const searchInput = <div className='searchInput'>
+            <h1>Steam App Search</h1>
             <input type="text" defaultValue={this.state.searchInputText} id="searchInput"
                    placeholder='Search Name or App ID' onChange={this.onSearchInputChange}/>
         </div>
@@ -304,10 +306,23 @@ class Client extends React.Component {
         if(searchData && searchData.length > 0) {
             let results = [];
             for(const data of searchData) {
+
+                // Prevent Clicking Button Contents
+                const noClick = {
+                    pointerEvents: 'none'
+                }
+                
+                // Button Contents
+                const img = data.header_image ?? default_img;
+                const appidStr = `${data.appid ?? 'N/A'}`;
+
                 // Create New Button
-                let newButton = <button id={data.appid} key={data.appid} onClick={this.onSearchResultClick}>
-                    <h2 style={{pointerEvents: 'none'}}>{data.name}</h2>
-                    <h3 style={{pointerEvents: 'none'}}>{data.appid}</h3>
+                const newButton = <button id={data.appid} key={data.appid} onClick={this.onSearchResultClick}>
+                    <img style={noClick} className='searchImg' src={img}  alt="header_image"/>
+                    <div style={noClick} className='searchText'>
+                        <h3 style={noClick}>{data.name}</h3>
+                        <h4 style={noClick}>{appidStr}</h4>
+                    </div>
                 </button>;
                 results.push(newButton);
             }
@@ -315,7 +330,6 @@ class Client extends React.Component {
             // Create Results Div
             const resultsDiv = <div className='searchDiv'>
                 <div className='searchResultsContainer'>
-                    <h2>Search Results: {this.state.searchData.length}</h2>
                     <div className='searchResults'>
                         {results}
                     </div>
@@ -332,7 +346,7 @@ class Client extends React.Component {
         // Return Search Without Results
         return <div className='searchDiv'>
             {searchInput}
-            <img src="https://cdn.discordapp.com/attachments/889961009966637106/1096243934231015504/steam_logo.png"  alt="header_image"/>
+            <img className='logoImg' src="https://cdn.discordapp.com/attachments/1096875004899115038/1096946029917651034/SteamInsight-Logo.png"  alt="header_image"/>
         </div>;
     }
 

@@ -120,11 +120,11 @@ class AppHandler {
 
             // Query to Search Database for any entries that have names that contain a given string or match the appid and are of type game
             // Prefer Results That More closely match the given string and sort alphabetically.
-            const query = "SELECT appid, name, type\n" +
+            const query = "SELECT appid, name, type, header_image, background\n" +
                 "FROM appinfo\n" +
                 "WHERE (name LIKE ? OR CAST(appid AS CHAR) = ?) AND type = 'game'\n" +
                 "ORDER BY CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, ?, '')) ASC, name ASC\n" +
-                "LIMIT 30"
+                "LIMIT 100"
             const likeStr = `%${str}%`;
 
             // Send Query to Database

@@ -13,6 +13,23 @@
     --color-3: #1b2838;
 
 
+    /* NEW */
+    --color-blue1: #3b9fef;
+    --color-blue2: #2562d1;
+    --color-blue3: #1c4c6c;
+    --color-blue4: #093377;
+
+    --color-white1: #c3e1f8;
+
+
+    --color-button1: #3b9fef;
+
+    --color-buttonActive: #5eb3f6;
+
+
+
+
+
 }
 body {
     text-align: center;
@@ -39,7 +56,7 @@ button {
     border-radius: 5px;
     padding: 0.75em 1em;
 
-    border: 1px solid black;
+    border: 1px solid BLACK;
 }
 
 button:hover {
