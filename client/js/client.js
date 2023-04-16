@@ -292,14 +292,14 @@ class Client extends React.Component {
      */
     buildSearchPage() {
 
-        const default_img = 'https://cdn.discordapp.com/attachments/1096875004899115038/1096895831992434788/header-final.png';
-
         // Create Search Input
         const searchInput = <div className='searchInput'>
-            <h1>Steam App Search</h1>
             <input type="text" defaultValue={this.state.searchInputText} id="searchInput"
-                   placeholder='Search Name or App ID' onChange={this.onSearchInputChange}/>
+                   placeholder='Search By Name or App ID' onChange={this.onSearchInputChange}/>
+            <img className='logoImg' src="https://cdn.discordapp.com/attachments/1096875004899115038/1096946029917651034/SteamInsight-Logo.png"  alt="header_image"/>
         </div>
+
+        const default_img = 'https://cdn.discordapp.com/attachments/1096875004899115038/1097057623653744680/header-2.png';
 
         // Create Results Button Array
         const searchData = this.state.searchData;
@@ -346,7 +346,6 @@ class Client extends React.Component {
         // Return Search Without Results
         return <div className='searchDiv'>
             {searchInput}
-            <img className='logoImg' src="https://cdn.discordapp.com/attachments/1096875004899115038/1096946029917651034/SteamInsight-Logo.png"  alt="header_image"/>
         </div>;
     }
 

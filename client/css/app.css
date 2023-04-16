@@ -1,66 +1,71 @@
 :root {
-    /* Dark Mode Colors */
-    --text-color: white;
-
-    --page-color1: #2e3043;
-    --page-color2: #3f466a;
-    --page-color3: #5d5f6f;
-    --page-color4: #15161b;
-
-    /* Dave Colors */
-    --color-1: #2a475e;
-    --color-2: #282d32;
-    --color-3: #1b2838;
-
-
-    /* NEW */
-    --color-blue1: #3b9fef;
+    /* NEW
+    --color-blue1: #222b34;
     --color-blue2: #2562d1;
-    --color-blue3: #1c4c6c;
+    --color-blue3: #1c4c6c;*
     --color-blue4: #093377;
 
     --color-white1: #c3e1f8;
 
-
-    --color-button1: #3b9fef;
-
-    --color-buttonActive: #5eb3f6;
+    --color-buttonDefault: ;
+    --color-buttonActive: #5eb3f6;*/
 
 
+    /* ------------------ */
+    --color-white1: #c3e1f8;
+    --color-blue1: #3b9fef;
+    --color-gray1: #2e2f31;
+    --color-gray2: #363c45;
+    --color-black: BLACK;
+    --color-active: var(--color-blue1);
 
+    --font-size-tile: 1.5rem;
+    --font-size-normal: 1rem;
 
+    --default-radius: 0.5em;
+    --default-padding: 2em;
+
+    --border-default: 1px solid var(--color-black);
+    --border-active: 1px solid var(--color-active);
+
+    --gradient1: linear-gradient(to bottom, var(--color-gray1), var(--color-gray2));
+    --gradient2: linear-gradient(to right, rgba(95, 95, 95, 0.22), rgba(73, 73, 73, 0.22));
+    --gradient3: radial-gradient(circle at top center, #2a475e 0%, #1b2838 80%);
+    --gradient4: linear-gradient(to right, #3b9fef, #2562d1);
 
 }
 body {
     text-align: center;
-    /*background-image: linear-gradient(to bottom, #2a475e, #1b2838);*/
 
-    background-image: radial-gradient(circle at top center, #2a475e 0%, #1b2838 80%););
-
-
-    height: 100%;
+    background-image: var(--gradient3);
     background-repeat: no-repeat;
     background-attachment: fixed;
 
-    color: var(--text-color);
     margin: 0;
     padding: 0;
+
+    height: 100%;
+    min-width: 1000px;
+
+    color: var(--color-white1);
+
     font-family: 'Arial', sans-serif;
 }
 
 button {
-    background-image: linear-gradient(to right, #3b9fef, #2562d1);
-    color: #c3e1f8;
+    background-image: var(--gradient4);
 
-    font-size: 16px;
-    border-radius: 5px;
     padding: 0.75em 1em;
 
-    border: 1px solid BLACK;
+    color: var(--color-white1);
+    font-size: var(--font-size-normal);
+
+    border-radius: var(--default-radius);
+    border: var(--border-default);
 }
 
 button:hover {
-    background-image: linear-gradient(to right, #3b9fef, #417be8);
+    border: var(--border-active);
     cursor: pointer;
 }
 
@@ -68,25 +73,21 @@ button:hover {
 /* Nav Bar */
 .navbar {
     width: 100%;
-    background-color: #1f222b;
+    background-color: var(--color-gray1);
     overflow: auto;
 }
 .navbar a:link {
     float: left;
-    padding: 0.7em;
+    padding: 0.75em;
     text-decoration: none;
-    font-size: 1em;
+    font-size: var(--font-size-normal);
 }
 .navbar a:hover {
-    background-color: var(--page-color3);
-    color: var(--page-color2);
+    background-color: var(--color-gray2);
+    color: var(--color-active);
 }
 .navbar a:visited {
     color: inherit;
-}
-
-.navbar_main{
-    background-color: var(--page-color1);
 }
 
 /* Root */
@@ -98,6 +99,7 @@ button:hover {
 .appDiv {
     display: flex;
     justify-content: center;
+
     width: 100%;
 }
 

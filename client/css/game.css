@@ -1,56 +1,44 @@
 
-
 .gameDiv {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    padding-top: 2em;
+    padding-top: var(--default-padding);
+
+    width: 100%;
 }
 
 /* Back Button */
 .backButton {
-    font-size: 16px;
-    border-radius: 5px;
-    padding: 0.75em 1em;
-
-    background-image: linear-gradient(to right, #3b9fef, #2562d1);
-    color: #c3e1f8;
-
     display: inline-block;
-    border: 1px solid black;
 
     align-self: flex-start;
     margin-left: 10%;
     margin-bottom: 1em;
-
 }
 
 /* Title Div */
 .titleContainer {
     display: flex;
     align-items: center;
-    width: 80%;
+
     margin: 0 auto;
 
-    background-image: linear-gradient(to right, rgba(95, 95, 95, 0.22), rgba(73, 73, 73, 0.22));
-    border-radius: 0.5em;
+    width: 80%;
 
+    background-image: var(--gradient2);
+    border-radius: var(--default-radius);
 }
 
-
-
 .titleContainer img {
-    border-radius: 0.5em;
+    border-radius: var(--default-radius);
 }
 
 .titleText {
     flex: 1;
-    padding-bottom: 2em;
-    padding-left: 4em;
-    padding-right: 4em;
+    padding: 1em 4em;
 }
 
 .swapButtons {
@@ -61,14 +49,12 @@
     font-size: 16px;
     border-radius: 5px;
 
-    background-image: linear-gradient(to right, var(--color-blue3), var(--color-blue4));
     color: var(--color-white1);
-
-    border: 1px solid black;
-
-    width: 20em;
+    background-image: var(--gradient1);
 
     margin: 0 1em;
+
+    width: 20em;
 }
 
 .swapButtons button:hover {
@@ -76,7 +62,7 @@
 }
 
 .swapButtons button:disabled {
-    background-image: linear-gradient(to right, #3b9fef, #316cd9);
+    background-image: var(--gradient4);
 }
 
 
