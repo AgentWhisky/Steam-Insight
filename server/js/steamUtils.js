@@ -47,7 +47,7 @@ module.exports = {getAppInfo: fetchAppInfo, getUserAchievements: fetchUserAchiev
  * @returns A Promise containing the JSON Response
  */
 function getResponseFromURL(url) {
-    console.log(`>FETCHING DATA FROM STEAM WEB API<`);
+    //console.log(`>FETCHING DATA FROM STEAM WEB API<`);
     return fetch(url)
         .then(response => {return response.json();})
         .catch(() => {console.log(`Failed To Fetch Response From URL: ${url}`)});

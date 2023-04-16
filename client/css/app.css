@@ -1,6 +1,10 @@
 :root {
     --color-white1: #c3e1f8;
     --color-blue1: #3b9fef;
+    --color-blue2: #2562d1;
+    --color-blue3: #3d6080;
+    --color-blue4: #101821;
+
     --color-gray1: #2e2f31;
     --color-gray2: #363c45;
     --color-black: #041128;
@@ -17,8 +21,8 @@
 
     --gradient1: linear-gradient(to bottom, var(--color-gray1), var(--color-gray2));
     --gradient2: linear-gradient(to right, rgba(95, 95, 95, 0.22), rgba(73, 73, 73, 0.22));
-    --gradient3: radial-gradient(circle at top center, #3d6080 0%, #101821 80%);
-    --gradient4: linear-gradient(to right, #3b9fef, #2562d1);
+    --gradient3: radial-gradient(circle at top center, var(--color-blue3) 0%, var(--color-blue4) 80%);
+    --gradient4: linear-gradient(to right, var(--color-blue1), var(--color-blue2));
 }
 body {
     text-align: center;

@@ -187,7 +187,7 @@ class AppHandler {
      * @private
      */
     _queryDatabase(query, values) {
-        console.log(`>FETCHING DATA FROM DATABASE<`);
+        //console.log(`>FETCHING DATA FROM DATABASE<`);
         return new Promise((resolve, reject) => {
             // Send Query to Database
             this.pool.query(query, values ?? [], (error, results, fields) => {

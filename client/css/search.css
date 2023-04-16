@@ -73,7 +73,7 @@
 
 .searchResults {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(200px,100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(240px,100%), 1fr));
     grid-gap: 1em;
 
     box-sizing: border-box;
