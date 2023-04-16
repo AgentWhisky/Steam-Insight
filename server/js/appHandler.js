@@ -138,7 +138,7 @@ class AppHandler {
             "FROM appinfo\n" +
             "WHERE (name LIKE ? OR CAST(appid AS CHAR) = ?) AND type = 'game'\n" +
             "ORDER BY CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, ?, '')) ASC, name ASC\n" +
-            "LIMIT 100"
+            "LIMIT 60"
         const likeStr = `%${str}%`;
 
         const values = [likeStr, str, str]

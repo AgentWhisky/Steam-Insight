@@ -41,31 +41,23 @@
     padding: 1em 4em;
 }
 
+/* Swap Buttons */
 .swapButtons {
     padding: 1em 1em;
 }
 
 .swapButtons button {
-    font-size: 16px;
-    border-radius: 5px;
-
     color: var(--color-white1);
-    background-image: var(--gradient1);
-
     margin: 0 1em;
-
     width: 20em;
-}
-
-.swapButtons button:hover {
-    cursor: pointer;
+    background-image: var(--gradient1);
 }
 
 .swapButtons button:disabled {
     background-image: var(--gradient4);
 }
 
-
+/* Details Table */
 .detailsTable {
     border-collapse: collapse;
     padding: 1em 1em;
@@ -90,23 +82,28 @@
     width: 100%;
 }
 
+/* Achievement Table */
 .achievementTable {
-    border-collapse: collapse;
-    padding: 1em 1em;
-    table-layout: fixed;
-    width: 80%;
-    margin: auto;
-
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    padding: 1em 1em;
+    margin: auto;
+
+    width: 80%;
 }
 
 .achievementTable td {
     word-wrap: break-word;
-    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
-    border: 1px solid black;
+
     padding: 0.25em 1em;
+
+    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
+    border: var(--border-default);
 }
 
 .achievementTable td:nth-child(5) {
@@ -115,21 +112,22 @@
 }
 
 .achievementTable td.completed {
-    background-image: linear-gradient(to right, #3183c5, #2a5bb6);
+    background-image: var(--gradient4);
 }
 
 .achievementTable th {
-    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
-    border: 1px solid black;
+    background-image: var(--gradient1);
+    border: var(--border-default);
+
     padding: 0.5em 0.5em;
 }
 
 .achievementTable h2 {
     padding: 0.5em 1em;
-    width: 40%;
     margin: 0 auto;
-}
 
+    width: 40%;
+}
 
 .iconImg {
     width: 64px;
@@ -137,36 +135,27 @@
 }
 
 .noticeH2 {
-    border: 1px solid black;
-    background-image: linear-gradient(to bottom, #2e2f31, #363c45);
-}
-
-.userSyncDiv {
-
+    border: var(--border-default);
+    background-image: var(--gradient1);
 }
 
 .userSyncDiv input {
     flex-grow: 1;
-    height: 2em;
-    border-radius: 0.25em;
+    text-align: center;
 
     padding: 0.25em 1em;
-
     margin: 1em 1em;
 
-    border: 1px solid black;
+    font-size: var(--font-size-normal);
+    height: 2em;
 
-    font-size: 16px;
-    text-align: center;
+    border-radius: var(--default-radius);
+    border: var(--border-default);
 }
 
 .settingsWarning {
-    background-image: linear-gradient(to right, rgba(95, 95, 95, 0.5), rgba(73, 73, 73, 0.5));
+    background-image: var(--gradient2);
     padding: 1em 1em;
-}
-
-.settingsWarning a:link {
-
 }
 
 .settingsWarning a:visited {
@@ -174,5 +163,5 @@
 }
 
 .settingsWarning a:hover {
-    color: #1b7fd2;
+    color: var(--color-active);
 }

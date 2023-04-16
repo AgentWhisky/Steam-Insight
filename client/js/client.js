@@ -39,11 +39,6 @@ class Client extends React.Component {
     socketIOEvents() {
         // Check Parameters
         this.checkURLParams();
-
-        // TESTING REMOVE ME
-        this.socket.on('test', data => {
-            console.log(data);
-        });
     }
 
     /**
@@ -61,13 +56,11 @@ class Client extends React.Component {
         // If steamid In URL, Set State
         if(steamid) {
             this.state.steamid = steamid; // Set steamid
-            console.log(`Set steamid On Load: ${steamid}`);
         }
 
         // If appid In URL, load page
         if(appid) {
             this.getAppData(appid);
-            console.log(`Fetched App Data On Load: ${appid}`);
         }
     }
 
@@ -111,7 +104,7 @@ class Client extends React.Component {
     onSearchInputChange(event) {
         event.preventDefault();
 
-        const MIN_LENGTH = 3; // Minimum Search String Size
+        const MIN_LENGTH = 1; // Minimum Search String Size
         const inputStr = event.target.value;
 
         // If Input < MIN_LENGTH characters
@@ -192,22 +185,29 @@ class Client extends React.Component {
 
         // Get steamid from input
         let steamid = document.getElementById('userSyncInput').value;
-        if(steamid) {
-            steamid = removeNonDigits(steamid); // Remove any non-digits
+        if(steamid != null) {
+
+            // Remove any non-digits
+            steamid = removeNonDigits(steamid);
 
             // Update steamid in state
             this.setState({
                 steamid: steamid
             });
-        }
 
+            // Get appid from state
+            const appid = this.state.appid;
 
-        // Get appid from state
-        const appid = this.state.appid;
-
-        // If Both Valid, Update User Data in state
-        if(steamid && appid) {
-            this.getUserData(appid, steamid);
+            // Update User Info if Valid
+            if(steamid !== '' && appid) {
+                this.getUserData(appid, steamid);
+            }
+            // Remove User Info
+            else {
+                this.setState({
+                    userInfo: null
+                });
+            }
         }
     }
 
@@ -234,7 +234,7 @@ class Client extends React.Component {
             // Update URL
             this.state.appid = appid; // Force Appid Update for URL Change
             this.updateURL();
-            console.log(response); // LOG RESPONSE
+            //console.log(response); // LOG RESPONSE
 
             // If Achievements and steamid are valid, get User Data
             const achievements = response.achievements;
@@ -272,7 +272,7 @@ class Client extends React.Component {
         this.socket.emit('userData', data, response => {
             // Update the URL
             this.updateURL();
-            console.log(response);
+            //console.log(response);
 
             this.setState({
                 userInfo: response,

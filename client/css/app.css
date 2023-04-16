@@ -1,17 +1,4 @@
 :root {
-    /* NEW
-    --color-blue1: #222b34;
-    --color-blue2: #2562d1;
-    --color-blue3: #1c4c6c;*
-    --color-blue4: #093377;
-
-    --color-white1: #c3e1f8;
-
-    --color-buttonDefault: ;
-    --color-buttonActive: #5eb3f6;*/
-
-
-    /* ------------------ */
     --color-white1: #c3e1f8;
     --color-blue1: #3b9fef;
     --color-gray1: #2e2f31;
@@ -32,7 +19,6 @@
     --gradient2: linear-gradient(to right, rgba(95, 95, 95, 0.22), rgba(73, 73, 73, 0.22));
     --gradient3: radial-gradient(circle at top center, #3d6080 0%, #101821 80%);
     --gradient4: linear-gradient(to right, #3b9fef, #2562d1);
-
 }
 body {
     text-align: center;
