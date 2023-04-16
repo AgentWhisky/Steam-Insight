@@ -43,6 +43,7 @@
     box-sizing: border-box;
     text-align: center;
 
+    padding: 0, var(--default-padding);
     margin: 1em 1em;
 
     font-size: var(--font-size-tile);
@@ -71,16 +72,17 @@
 }
 
 .searchResults {
-    justify-content: center;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(200px,100%), 1fr));
     grid-gap: 1em;
+
     box-sizing: border-box;
     text-align: center;
 
+    margin: 0 auto;
     padding: 1em 1em;
 
-    width: 100%;
+    width: 80%;
 }
 
 .searchResults button {

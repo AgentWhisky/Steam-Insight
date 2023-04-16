@@ -24,6 +24,9 @@ class AppHandler {
         // Cache for storing User Info (From Steam Web API)
         this.userInfoCache = new Cache(10); // 10 Minute Cache
 
+        // Cache for storing Appid List (From Database)
+        this.appCache = new Cache(10);
+
         // Create Database Query Pool
         this.pool = mysql.createPool({
             host: DB_HOST,
@@ -48,11 +51,18 @@ class AppHandler {
             return Promise.resolve(appInfo);
         }
 
-        // Get Game Info From API and Update Cache
-        return getAppInfo(appid).then(appInfo => {
-            this.appInfoCache.update(appid, appInfo);
-            return appInfo;
+        // Check Valid Appid
+        return this._isValidAppid(appid).then(valid => {
+            if(valid) {
+                // Get Game Info From API and Update Cache
+                return getAppInfo(appid).then(appInfo => {
+                    this.appInfoCache.update(appid, appInfo);
+                    return appInfo;
+                });
+            }
+            return Promise.resolve(null);
         });
+
     }
 
     /**
@@ -72,12 +82,17 @@ class AppHandler {
             return Promise.resolve(userInfo);
         }
 
-        // Get User Info For App From API and Update Cache
-        return getUserAchievements(appid, steamid).then(userInfo => {
-            this.userInfoCache.update(key, userInfo);
-            return userInfo;
+        // Check Valid Appid
+        return this._isValidAppid(appid).then(valid => {
+            if (valid) {
+                // Get User Info For App From API and Update Cache
+                return getUserAchievements(appid, steamid).then(userInfo => {
+                    this.userInfoCache.update(key, userInfo);
+                    return userInfo;
+                });
+            }
+            return Promise.resolve(null);
         });
-
     }
 
     /**
@@ -116,19 +131,66 @@ class AppHandler {
      * @private
      */
     _getAppListFromString(str) {
+
+        // Query to Search Database for any entries that have names that contain a given string or match the appid and are of type game
+        // Prefer Results That More closely match the given string and sort alphabetically.
+        const query = "SELECT appid, name, type, header_image, background\n" +
+            "FROM appinfo\n" +
+            "WHERE (name LIKE ? OR CAST(appid AS CHAR) = ?) AND type = 'game'\n" +
+            "ORDER BY CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, ?, '')) ASC, name ASC\n" +
+            "LIMIT 100"
+        const likeStr = `%${str}%`;
+
+        const values = [likeStr, str, str]
+
+        // Query Database and Return
+        return this._queryDatabase(query, values).then(result => {
+            return result;
+        });
+
+    }
+
+    /**
+     * Function to check if a given appid is valid
+     * @param appid is the given appid
+     * @returns A Promise of true if appid exists or false if does not
+     * @private
+     */
+    _isValidAppid(appid) {
+        // cache appid: boolean (true,false)
+        const app = this.appCache.getData(appid);
+        if(app != null) {
+            return Promise.resolve(app); // Result Stored (True or False)
+        }
+
+        // Query To Check Database for appid
+        const query = "SELECT COUNT(*) as count FROM AppInfo WHERE appid = ? AND type != 'invalid'";
+
+        return this._queryDatabase(query, [appid]).then(result => {
+            // Extract Result
+            const valid = result[0].count > 0;
+
+            // Cache Result
+            this.appCache.update(appid, valid);
+
+            return valid;
+        });
+
+
+    }
+
+    /**
+     * Function to query database with given query and value array
+     * @param query is the query
+     * @param values is the value array
+     * @returns A Promise of query results on success or null on failure
+     * @private
+     */
+    _queryDatabase(query, values) {
+        console.log(`>FETCHING DATA FROM DATABASE<`);
         return new Promise((resolve, reject) => {
-
-            // Query to Search Database for any entries that have names that contain a given string or match the appid and are of type game
-            // Prefer Results That More closely match the given string and sort alphabetically.
-            const query = "SELECT appid, name, type, header_image, background\n" +
-                "FROM appinfo\n" +
-                "WHERE (name LIKE ? OR CAST(appid AS CHAR) = ?) AND type = 'game'\n" +
-                "ORDER BY CHAR_LENGTH(name) - CHAR_LENGTH(REPLACE(name, ?, '')) ASC, name ASC\n" +
-                "LIMIT 100"
-            const likeStr = `%${str}%`;
-
             // Send Query to Database
-            this.pool.query(query, [likeStr, str, str], (error, results, fields) => {
+            this.pool.query(query, values ?? [], (error, results, fields) => {
                 if(error) {
                     reject(error);
                 }

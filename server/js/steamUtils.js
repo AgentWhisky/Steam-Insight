@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
  * @param appid is the given appid
  * @returns A Promise of all necessary app info (some of which may be null)
  */
-function getAppInfo(appid) {
+function fetchAppInfo(appid) {
     // Combine API Calls for AppDetails and AppAchievements
     return Promise.all([getAppDetails(appid), getAppAchievements(appid)])
         .then(([appDetails, appAchievements]) => {
@@ -27,7 +27,7 @@ function getAppInfo(appid) {
  * @param steamid is the given steamid
  * @returns A Promise of user info for game on success or null on failure
  */
-function getUserAchievements(appid, steamid) {
+function fetchUserAchievements(appid, steamid) {
     const url = `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=${appid}&key=${process.env.STEAM_API_KEY}&steamid=${steamid}`
 
     return getResponseFromURL(url).then(response => {
@@ -36,7 +36,7 @@ function getUserAchievements(appid, steamid) {
 }
 
 // *** Export Functions ***
-module.exports = {getAppInfo, getUserAchievements};
+module.exports = {getAppInfo: fetchAppInfo, getUserAchievements: fetchUserAchievements};
 
 
 // *** Private Functions ***
@@ -47,6 +47,7 @@ module.exports = {getAppInfo, getUserAchievements};
  * @returns A Promise containing the JSON Response
  */
 function getResponseFromURL(url) {
+    console.log(`>FETCHING DATA FROM STEAM WEB API<`);
     return fetch(url)
         .then(response => {return response.json();})
         .catch(() => {console.log(`Failed To Fetch Response From URL: ${url}`)});

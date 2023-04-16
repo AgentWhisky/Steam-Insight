@@ -314,13 +314,15 @@ class Client extends React.Component {
                 
                 // Button Contents
                 const img = data.header_image ?? default_img;
+                const name = removeExtraCharacters(data.name);
                 const appidStr = `${data.appid ?? 'N/A'}`;
+
 
                 // Create New Button
                 const newButton = <button id={data.appid} key={data.appid} onClick={this.onSearchResultClick}>
                     <img style={noClick} className='searchImg' src={img}  alt="header_image"/>
                     <div style={noClick} className='searchText'>
-                        <h3 style={noClick}>{data.name}</h3>
+                        <h3 style={noClick}>{name}</h3>
                         <h4 style={noClick}>{appidStr}</h4>
                     </div>
                 </button>;
@@ -340,6 +342,13 @@ class Client extends React.Component {
             return <div className='searchDiv'>
                 {searchInput}
                 {resultsDiv}
+            </div>;
+        }
+        else if(searchData) {
+            // Return Search Without Results
+            return <div className='searchDiv'>
+                {searchInput}
+                <h2>No Results Found</h2>
             </div>;
         }
 
@@ -588,7 +597,7 @@ class Client extends React.Component {
         return <div className='achievementTable'>
             <div className='userSyncDiv'>
                 <input id='userSyncInput' type='number' min='0' maxLength='16' placeholder='Steam User ID' defaultValue={this.state.steamid ?? ''} onChange={this.onSteamIDChange}/>
-                <button onClick={this.onUserSync}>Sync Achievements</button>
+                <button onClick={this.onUserSync}><i className="fa-solid fa-rotate"></i> Sync Achievements</button>
             </div>
             {infoBanner}
             <table>
