@@ -314,7 +314,7 @@ class Client extends React.Component {
                 
                 // Button Contents
                 const img = data.header_image ?? default_img;
-                const name = removeExtraCharacters(data.name);
+                const name = data.name ?? 'N/A';
                 const appidStr = `${data.appid ?? 'N/A'}`;
 
 
@@ -524,8 +524,10 @@ class Client extends React.Component {
         let rows = []
         let count = 1;
 
+        // If there Are User Achievements
         if(userAchievements) {
-            for (const achievement of achievements) {
+
+            for(const achievement of achievements) {
                 // Completed Achievement
                 if(userAchievementSet.has(achievement.name)) {
                     rows.push(<tr key={`${count}`}>
@@ -551,8 +553,9 @@ class Client extends React.Component {
                 count++;
             }
         }
+        // If the User Is Not Synced
         else {
-            for (const achievement of achievements) {
+            for(const achievement of achievements) {
                 rows.push(<tr key={`${count}`}>
                     <td>{count}</td>
                     <td><img className='iconImg' src={achievement.icon} alt="Achievement Image"/></td>

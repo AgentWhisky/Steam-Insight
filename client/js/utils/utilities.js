@@ -16,11 +16,6 @@ function removeNonDigits(str) {
     return str.replace(/\D/g, '');
 }
 
-function removeExtraCharacters(str) {
-    return str.replace(/[^a-zA-Z0-9:\u00C0-\u017F\s]+/g, "");
-
-}
-
 /**
  * Function to capitalize the first letter of given string
  * @param str is the given string
@@ -29,4 +24,5 @@ function removeExtraCharacters(str) {
 function capitalizeString(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
 

@@ -60,7 +60,7 @@
 /* Details Table */
 .detailsTable {
     border-collapse: collapse;
-    padding: 1em 1em;
+    padding: 0 1em;
     table-layout: fixed;
     width: 80%;
     margin: auto;
@@ -69,7 +69,7 @@
 .detailsTable td {
     word-wrap: break-word;
     background-image: linear-gradient(to bottom, #2e2f31, #363c45);
-    border: 1px solid black;
+    border: var(--border-default);
     padding: 1em;
 }
 

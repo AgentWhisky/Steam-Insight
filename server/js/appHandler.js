@@ -22,7 +22,7 @@ class AppHandler {
         this.appListCache = new Cache();
 
         // Cache for storing User Info (From Steam Web API)
-        this.userInfoCache = new Cache(10); // 10 Minute Cache
+        this.userInfoCache = new Cache(5); // 5 Minute Cache
 
         // Cache for storing Appid List (From Database)
         this.appCache = new Cache(10);
