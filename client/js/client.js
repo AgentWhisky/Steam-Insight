@@ -1,8 +1,13 @@
 'use strict';
 
+const defaultLogo = "resources/steam_insights_logo.png";
+const defaultHeader = 'resources/steam-app-header-default.png';
+
 const e = React.createElement;
 
 class Client extends React.Component {
+
+
     constructor(props) {
         super(props);
 
@@ -292,15 +297,14 @@ class Client extends React.Component {
      */
     buildSearchPage() {
 
+
         // Create Search Input
         const searchInput = <div className='searchInput'>
             <input type="text" defaultValue={this.state.searchInputText} id="searchInput"
                    placeholder='Search By Name or App ID' onChange={this.onSearchInputChange}/>
-            <img className='logoImg' src="https://cdn.discordapp.com/attachments/1096875004899115038/1096946029917651034/SteamInsight-Logo.png"  alt="header_image"/>
+            <img className='logoImg' src={defaultLogo}  alt="header_image"/>
         </div>
 
-        // Set Default Image location
-        const default_img = 'resources/steam-app-header-default.png';
 
         // Create Results Button Array
         const searchData = this.state.searchData;
@@ -314,7 +318,7 @@ class Client extends React.Component {
                 }
                 
                 // Button Contents
-                const img = data.header_image ?? default_img;
+                const img = data.header_image ?? defaultHeader;
 
                 const name = data.name ?? 'N/A';
                 const appidStr = `${data.appid ?? 'N/A'}`;
