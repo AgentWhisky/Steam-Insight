@@ -1,6 +1,6 @@
 'use strict';
 
-const defaultLogo = "resources/steam_insights_logo.png";
+const defaultLogo = "resources/logo.png";
 const defaultHeader = 'resources/steam-app-header-default.png';
 
 const e = React.createElement;
