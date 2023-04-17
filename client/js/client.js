@@ -604,6 +604,15 @@ class Client extends React.Component {
             }
         }
 
+        let allAchievements = '';
+        if(userAchievements && achievements) {
+            if(userAchievements.length === achievements.length) {
+                allAchievements = 'allAchievements';
+            }
+            console.log(userAchievements.length)
+            console.log(achievements.length)
+        }
+
         // Return Build Achievement Table
         return <div className='achievementTable'>
             <div className='userSyncDiv'>
@@ -611,7 +620,7 @@ class Client extends React.Component {
                 <button onClick={this.onUserSync}><i className="fa-solid fa-rotate"></i> Sync Achievements</button>
             </div>
             {infoBanner}
-            <table>
+            <table className={allAchievements}>
                 <thead>
                 <tr><th>#</th>
                     <th>Icon</th>

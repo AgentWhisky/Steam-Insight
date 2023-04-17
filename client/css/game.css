@@ -153,6 +153,7 @@
     border: var(--border-default);
 }
 
+/* Warnings */
 .settingsWarning {
     background-image: var(--gradient2);
     padding: 1em 1em;
@@ -164,4 +165,28 @@
 
 .settingsWarning a:hover {
     color: var(--color-active);
+}
+
+/* Add Glowing Border to Achievement Table when all complete */
+.allAchievements {
+    border: 2px solid transparent;
+    text-align: center;
+    animation: glow 4s ease-in-out infinite;
+}
+
+/* Glow Frames */
+@keyframes glow {
+
+    0% {
+        border-color: var(--color-gold1);
+        box-shadow: 0 0 1em var(--color-gold1);
+    }
+    50% {
+        border-color: var(--color-gold2);
+        box-shadow: 0 0 2em var(--color-gold2);
+    }
+    100% {
+        border-color: var(--color-gold1);
+        box-shadow: 0 0 1em var(--color-gold1);
+    }
 }
