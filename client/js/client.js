@@ -532,11 +532,12 @@ class Client extends React.Component {
             for(const achievement of achievements) {
                 // Completed Achievement
                 if(userAchievementSet.has(achievement.name)) {
+                    const hidden = achievement.hidden === 1 ? 'Yes' : 'No'
                     rows.push(<tr key={`${count}`}>
                         <td className='completed'>{count}</td>
                         <td className='completed'><img className='iconImg' src={achievement.icon} alt="Achievement Image"/></td>
                         <td className='completed'>{achievement.displayName}</td>
-                        <td className='completed'>{achievement.hidden}</td>
+                        <td className='completed'>{hidden}</td>
                         <td className='completed'>{achievement.description ?? 'Hidden Achievement'}</td>
                         <td className='completed'>Completed</td>
                     </tr>);
@@ -558,11 +559,12 @@ class Client extends React.Component {
         // If the User Is Not Synced
         else {
             for(const achievement of achievements) {
+                const hidden = achievement.hidden === 1 ? 'Yes' : 'No'
                 rows.push(<tr key={`${count}`}>
                     <td>{count}</td>
                     <td><img className='iconImg' src={achievement.icon} alt="Achievement Image"/></td>
                     <td>{achievement.displayName}</td>
-                    <td>{achievement.hidden}</td>
+                    <td>{hidden}</td>
                     <td>{achievement.description ?? 'Hidden Achievement'}</td>
                 </tr>);
                 count++;
