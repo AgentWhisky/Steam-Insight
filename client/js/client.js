@@ -299,7 +299,8 @@ class Client extends React.Component {
             <img className='logoImg' src="https://cdn.discordapp.com/attachments/1096875004899115038/1096946029917651034/SteamInsight-Logo.png"  alt="header_image"/>
         </div>
 
-        const default_img = 'https://cdn.discordapp.com/attachments/1096875004899115038/1097057623653744680/header-2.png';
+        // Set Default Image location
+        const default_img = 'resources/steam-app-header-default.png';
 
         // Create Results Button Array
         const searchData = this.state.searchData;
@@ -314,6 +315,7 @@ class Client extends React.Component {
                 
                 // Button Contents
                 const img = data.header_image ?? default_img;
+
                 const name = data.name ?? 'N/A';
                 const appidStr = `${data.appid ?? 'N/A'}`;
 
