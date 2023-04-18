@@ -5,6 +5,12 @@
 
 ---
 
+
+## Authors
+
+- [@AgentWhisky](https://www.github.com/AgentWhisky) - Developer
+- [@Adwen](https://steamcommunity.com/id/Thatmos/) - Icon and Logo Designer
+
 ## Features
 
 - Real-Time User Achievement Status
