@@ -190,7 +190,6 @@ class Client extends React.Component {
 
         // Extract Input
         const syncInput = document.getElementById('userSyncInput').value;
-        console.log(syncInput);
 
         // If Input is Empty, clear SteamID and UserInfo
         if(syncInput === '') {
@@ -237,7 +236,6 @@ class Client extends React.Component {
             // Update URL
             this.state.appid = appid; // Force Appid Update for URL Change
             this.updateURL();
-            //console.log(response); // LOG RESPONSE
 
             // If Achievements and steamid are valid, get User Data
             const achievements = response.achievements;
@@ -275,7 +273,6 @@ class Client extends React.Component {
         this.socket.emit('userData', data, response => {
             // Update the URL
             this.updateURL();
-            //console.log(response);
 
             this.setState({
                 userInfo: response,
@@ -324,8 +321,6 @@ class Client extends React.Component {
      * @returns The Div Containing the Current Search Page
      */
     buildSearchPage() {
-
-
         // Create Search Input
         const searchInput = <div className='searchInput'>
             <input type="text" defaultValue={this.state.searchInputText} id="searchInput"
@@ -562,9 +557,10 @@ class Client extends React.Component {
         if(userAchievements) {
 
             for(const achievement of achievements) {
+                const hidden = achievement.hidden === 1 ? 'Yes' : 'No';
+
                 // Completed Achievement
                 if(userAchievementSet.has(achievement.name)) {
-                    const hidden = achievement.hidden === 1 ? 'Yes' : 'No'
                     rows.push(<tr key={`${count}`}>
                         <td className='completed'>{count}</td>
                         <td className='completed'><img className='iconImg' src={achievement.icon} alt="Achievement Image"/></td>
@@ -580,7 +576,7 @@ class Client extends React.Component {
                         <td>{count}</td>
                         <td><img className='iconImg' src={achievement.icon} alt="Achievement Image"/></td>
                         <td>{achievement.displayName}</td>
-                        <td>{achievement.hidden}</td>
+                        <td>{hidden}</td>
                         <td>{achievement.description ?? 'Hidden Achievement'}</td>
                         <td>Not Completed</td>
                     </tr>);
