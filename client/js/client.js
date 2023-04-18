@@ -188,31 +188,29 @@ class Client extends React.Component {
     onUserSync(event) {
         event.preventDefault();
 
-        // Get steamid from input
-        let steamid = document.getElementById('userSyncInput').value;
-        if(steamid != null) {
+        // Extract Input
+        const syncInput = document.getElementById('userSyncInput').value;
+        console.log(syncInput);
 
-            // Remove any non-digits
-            steamid = removeNonDigits(steamid);
+        // If Input is Empty, clear SteamID and UserInfo
+        if(syncInput === '') {
+            this.state.steamid = null;
+            this.state.userInfo = null;
+            this.updateURL();
 
-            // Update steamid in state
-            this.setState({
-                steamid: steamid
+            this.forceUpdate();
+            return;
+        }
+
+        // Is Not A Number, Try To Resolve to steamid
+        if(isNaN(syncInput)) {
+            this.socket.emit('fetchSteamID', syncInput, response => {
+                this.updateSteamID(response);
             });
-
-            // Get appid from state
-            const appid = this.state.appid;
-
-            // Update User Info if Valid
-            if(steamid !== '' && appid) {
-                this.getUserData(appid, steamid);
-            }
-            // Remove User Info
-            else {
-                this.setState({
-                    userInfo: null
-                });
-            }
+        }
+        // Update SteamID
+        else {
+            this.updateSteamID(syncInput);
         }
     }
 
@@ -284,6 +282,36 @@ class Client extends React.Component {
             });
 
         });
+    }
+
+    /**
+     * Function to update the steamid and fetch userData if possible
+     * @param steamid
+     */
+    updateSteamID(steamid) {
+        // If null steamid, clear userInfo and return
+        if(!steamid) {
+            this.setState({
+                userInfo: null
+            });
+            return;
+        }
+
+        // Update steamid in state
+        this.setState({
+            steamid: steamid
+        });
+
+        // Update Input
+        document.getElementById('userSyncInput').value = steamid;
+
+        // Get appid from state
+        const appid = this.state.appid;
+
+        // Update User Info if Valid
+        if(appid) {
+            this.getUserData(appid, steamid);
+        }
     }
 
 
@@ -580,8 +608,8 @@ class Client extends React.Component {
         // Invalid Steam ID
         if(!this.state.userInfo && this.state.steamid) {
             infoBanner = <div className='settingsWarning'>
-                <h2>Invalid Steam ID</h2>
-                <h4>The ID You Have Entered Is Invalid, Please Check It And Try Again</h4>
+                <h2>Invalid Steam ID or Username</h2>
+                <h4>The ID or Username You Have Entered Is Invalid, Please Check It And Try Again</h4>
             </div>;
         }
 
@@ -604,19 +632,18 @@ class Client extends React.Component {
             }
         }
 
+        // Set Achievements Border if All Complete
         let allAchievements = '';
         if(userAchievements && achievements) {
             if(userAchievements.length === achievements.length) {
                 allAchievements = 'allAchievements';
             }
-            console.log(userAchievements.length)
-            console.log(achievements.length)
         }
 
         // Return Build Achievement Table
         return <div className='achievementTable'>
             <div className='userSyncDiv'>
-                <input id='userSyncInput' type='number' min='0' maxLength='16' placeholder='Steam User ID' defaultValue={this.state.steamid ?? ''} onChange={this.onSteamIDChange}/>
+                <input id='userSyncInput' type='text' maxLength='20' placeholder='Enter Steam ID or Username' defaultValue={this.state.steamid ?? ''}/>
                 <button onClick={this.onUserSync}><i className="fa-solid fa-rotate"></i> Sync Achievements</button>
             </div>
             {infoBanner}

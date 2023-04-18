@@ -1,7 +1,7 @@
 // Imports
 const mysql = require('mysql2');
 const {Cache} = require("./cache.js");
-const {getAppInfo, getUserAchievements} = require("./steamUtils");
+const {fetchAppInfo, fetchUserAchievements, fetchSteamID} = require("./steamUtils");
 
 // Database Info
 const DB_HOST = process.env.DB_HOST;
@@ -10,22 +10,27 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 
+const ERROR_STEAMID = 1;
+
 /**
  * Class - Used For Handling Searching and Retrieving Game Details, Caches Results
  */
 class AppHandler {
     constructor() {
         // Cache for storing AppInfo (From Steam Web API)
-        this.appInfoCache = new Cache();
+        this.appInfoCache = new Cache(); // 1 Hour Cache
 
         // Cache for storing App List (From Database)
-        this.appListCache = new Cache();
+        this.appListCache = new Cache(); // 1 Hour Cache
 
         // Cache for storing User Info (From Steam Web API)
         this.userInfoCache = new Cache(5); // 5 Minute Cache
 
         // Cache for storing Appid List (From Database)
-        this.appCache = new Cache(10);
+        this.appCache = new Cache(10); // 10 Minute Cache
+
+        // Cache for storing steamIDs
+        this.steamIDCache = new Cache(); // 1 Hour Cache
 
         // Create Database Query Pool
         this.pool = mysql.createPool({
@@ -55,7 +60,7 @@ class AppHandler {
         return this._isValidAppid(appid).then(valid => {
             if(valid) {
                 // Get Game Info From API and Update Cache
-                return getAppInfo(appid).then(appInfo => {
+                return fetchAppInfo(appid).then(appInfo => {
                     this.appInfoCache.update(appid, appInfo);
                     return appInfo;
                 });
@@ -86,7 +91,7 @@ class AppHandler {
         return this._isValidAppid(appid).then(valid => {
             if (valid) {
                 // Get User Info For App From API and Update Cache
-                return getUserAchievements(appid, steamid).then(userInfo => {
+                return fetchUserAchievements(appid, steamid).then(userInfo => {
                     this.userInfoCache.update(key, userInfo);
                     return userInfo;
                 });
@@ -122,8 +127,30 @@ class AppHandler {
         });
     }
 
-    // *** Private Functions ***
+    /**
+     * Function to fetch a steamid from a given username
+     * @param username is the given username
+     * @returns A Promise containing a steamid on success or null on failure
+     */
+    getUserID(username) {
+        // Check Cache
+        const steamID = this.steamIDCache.getData(username);
+        if(steamID) {
+            return Promise.resolve(steamID);
+        }
+        // Fetch From API and Cache Result
+        return fetchSteamID(username).then(steamid => {
+            // If No SteamID Received, Return 1 As Default
+            if(!steamid) {
+                this.steamIDCache.update(username, ERROR_STEAMID);
+                return ERROR_STEAMID;
+            }
+            this.steamIDCache.update(username, steamid);
+            return steamid;
+        });
+    }
 
+    // *** Private Functions ***
     /**
      * Function to Asynchronously Make A Query to Database For A Search Given a String
      * @param str is the given string

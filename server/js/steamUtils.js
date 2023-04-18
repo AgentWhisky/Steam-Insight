@@ -35,8 +35,25 @@ function fetchUserAchievements(appid, steamid) {
     });
 }
 
+/**
+ * Function to fetch steam user ID from given username
+ * @param username is the given username
+ * @returns A Promise Containing Steam ID on success or null on failure
+ */
+function fetchSteamID(username) {
+    // Make API Call
+    const url = `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAM_API_KEY}&vanityurl=${username}`
+    return getResponseFromURL(url).then(data => {
+        // Extract SteamID
+        if(data.response.success === 1) {
+            return data.response.steamid;
+        }
+        return null;
+    });
+}
+
 // *** Export Functions ***
-module.exports = {getAppInfo: fetchAppInfo, getUserAchievements: fetchUserAchievements};
+module.exports = {fetchAppInfo, fetchUserAchievements, fetchSteamID};
 
 
 // *** Private Functions ***

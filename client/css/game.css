@@ -147,6 +147,7 @@
     margin: 1em 1em;
 
     font-size: var(--font-size-normal);
+    width: 30%;
     height: 2em;
 
     border-radius: var(--default-radius);

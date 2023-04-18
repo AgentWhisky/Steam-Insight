@@ -62,6 +62,14 @@ io.on('connection', function(socket) {
         });
     });
 
+    // User Data Call
+    socket.on('fetchSteamID', (username, callback) => {
+        handler.getUserID(username).then(response => {
+            callback(response);
+        });
+    });
+
+
 });
 
 
