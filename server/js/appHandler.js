@@ -150,7 +150,7 @@ class AppHandler {
         });
     }
 
-    // *** Private Functions ***
+
     /**
      * Function to Asynchronously Make A Query to Database For A Search Given a String
      * @param str is the given string
@@ -180,7 +180,7 @@ class AppHandler {
     /**
      * Function to check if a given appid is valid
      * @param appid is the given appid
-     * @returns A Promise of true if appid exists or false if does not
+     * @returns A Promise of true if appid exists or false if it does not
      * @private
      */
     _isValidAppid(appid) {
