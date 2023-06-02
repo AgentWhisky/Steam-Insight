@@ -27,6 +27,7 @@
 ## Web App Host
 
 https://steam-insight.onrender.com
+(Tool has an up-to 60 Second Startup Time Due To Host)
 
 ---
 
